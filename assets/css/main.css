@@ -9,7 +9,7 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  scrollbar-color: gray white;
+  scrollbar-color: rgb(219, 219, 219) white;
   scrollbar-width: thin;
 
   &::-webkit-scrollbar {
@@ -23,10 +23,10 @@
 
   &::-webkit-scrollbar-thumb {
     border-radius: 12px;
-    background-color: gray;
+    background-color: rgb(219, 219, 219);
   }
 }
 
 html {
-  overflow-y: auto !important;
+  overflow-y: hidden !important;
 }

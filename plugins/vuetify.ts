@@ -14,6 +14,10 @@ export default defineNuxtPlugin((app) => {
         variant: "outlined",
         density: "compact",
       },
+      VSelect: {
+        variant: "outlined",
+        density: "compact",
+      },
     },
   });
   app.vueApp.use(vuetify);

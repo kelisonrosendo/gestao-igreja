@@ -19,7 +19,7 @@
               v-for="(item, index) in item.items"
               class="border-b last:border-b-0"
               :value="item"
-              :href="item.to"
+              :to="item.to"
               :key="index"
             >
               <template v-slot:prepend>
@@ -33,7 +33,7 @@
           </v-list>
         </v-menu>
 
-        <v-btn v-else color="primary" :prepend-icon="item.icon" :href="item.to">
+        <v-btn v-else color="primary" :prepend-icon="item.icon" :to="item.to">
           {{ item.label }}
         </v-btn>
       </li>
@@ -60,12 +60,12 @@ const menuItems = ref([
         icon: "mdi-account-group",
         to: "/cadastros/membros",
       },
-      {
-        key: "CARGO",
-        label: "Cargos",
-        icon: "mdi-account-tie",
-        to: "/cadastros/cargos",
-      },
+      // {
+      //   key: "CARGO",
+      //   label: "Cargos",
+      //   icon: "mdi-account-tie",
+      //   to: "/cadastros/cargos",
+      // },
     ],
   },
   {
@@ -73,12 +73,12 @@ const menuItems = ref([
     label: "Financeiro",
     icon: "mdi-finance",
     items: [
-      {
-        key: "DIZIMO",
-        label: "Dízimos e ofertas",
-        icon: "mdi-currency-usd",
-        to: "/financeiro/dizimos-ofertas",
-      },
+      // {
+      //   key: "DIZIMO",
+      //   label: "Dízimos e ofertas",
+      //   icon: "mdi-currency-usd",
+      //   to: "/financeiro/dizimos-ofertas",
+      // },
     ],
   },
 ]);
