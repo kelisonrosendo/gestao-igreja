@@ -6,6 +6,7 @@
       <v-row>
         <v-col cols="4">
           <v-select
+            v-model="formData.situacao"
             persistent-placeholder
             return-object
             label="Situação"
@@ -170,4 +171,7 @@
 const props = defineProps({
   membroId: Number,
 });
+
+const membroStore = useMembroStore();
+const { formData } = storeToRefs(membroStore);
 </script>

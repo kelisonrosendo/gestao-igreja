@@ -5,6 +5,7 @@ export default defineNuxtConfig({
   build: {
     transpile: ["vuetify"],
   },
+  css: ["~/assets/css/main.css"],
   modules: [
     (_options, nuxt) => {
       nuxt.hooks.hook("vite:extendConfig", (config) => {
@@ -13,8 +14,12 @@ export default defineNuxtConfig({
       });
     },
     "@nuxtjs/tailwindcss",
+    "@pinia/nuxt",
+    "@nuxtjs/supabase",
   ],
-  css: ["~/assets/css/main.css"],
+  pinia: {
+    storesDirs: ["./stores/**"],
+  },
   vite: {
     vue: {
       template: {

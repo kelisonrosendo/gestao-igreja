@@ -15,6 +15,7 @@
           hide-details
           append-inner-icon="mdi-magnify"
           placeholder="Pesquisar..."
+          @input="onInput"
         />
       </v-col>
     </v-row>
@@ -22,18 +23,16 @@
     <v-row>
       <v-col>
         <ui-table
-          v-bind="{ headers, serverItems, totalItems, loading }"
-          @update-options="loadItems"
+          :search="search"
+          :headers="headers"
+          :server-items="membros"
+          :total-items="total"
+          :loading="loading"
+          @update-options="membroStore.loadMembros"
         >
           <template v-slot:item.acoes="{ item }">
             <div class="flex gap-4">
-              <v-btn
-                icon
-                size="x-small"
-                color="primary"
-                variant="tonal"
-                @click="editMembro(item)"
-              >
+              <v-btn icon size="x-small" color="primary" variant="tonal">
                 <v-icon size="18">mdi-note-edit-outline</v-icon>
 
                 <v-tooltip activator="parent"> Editar </v-tooltip>
@@ -58,65 +57,17 @@ definePageMeta({
   subtitle: "Lista de membros",
 });
 
-interface ServerItems {
-  id: number;
-  nome: string;
-}
+const membroStore = useMembroStore();
+const { headers, membros, total, loading, search } = storeToRefs(membroStore);
 
-const serverItems = ref<ServerItems[]>([]);
-const totalItems = ref<number>(0);
-const loading = ref<boolean>(true);
+const onInput = (event: any) => {
+  const timeoutId = window.setTimeout(() => {}, 0);
+  for (let id = timeoutId; id >= 0; id -= 1) {
+    window.clearTimeout(id);
+  }
 
-const headers = ref([
-  {
-    key: "id",
-    title: "ID",
-    sortable: false,
-  },
-  {
-    key: "nome",
-    title: "Nome",
-    sortable: false,
-  },
-  {
-    key: "acoes",
-    title: "Ações",
-    sortable: false,
-    align: "center",
-    width: 10,
-  },
-]);
-
-const loadItems = () => {
-  serverItems.value = [
-    {
-      id: 1,
-      nome: "Membro 1",
-    },
-    {
-      id: 2,
-      nome: "Membro 2",
-    },
-    {
-      id: 3,
-      nome: "Membro 3",
-    },
-    {
-      id: 4,
-      nome: "Membro 4",
-    },
-    {
-      id: 5,
-      nome: "Membro 5",
-    },
-  ];
-
-  totalItems.value = 5;
-  loading.value = false;
-};
-
-const editMembro = (membro) => {
-  console.log(membro);
-  navigateTo(`/cadastros/membros/crud/${membro.id}`);
+  setTimeout(() => {
+    search.value = event.target.value;
+  }, 500);
 };
 </script>

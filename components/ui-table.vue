@@ -10,7 +10,7 @@
     loading-text="Carregando..."
     items-per-page-text="Itens por página:"
     page-text="{0}-{1} de {2}"
-    :items-per-page-options="[2, 4]"
+    :items-per-page-options="[5, 10, 15, 20]"
     @update:options="(value) => $emit('update-options', value)"
   >
     <template
@@ -43,7 +43,7 @@ const props = defineProps({
   loading: Boolean,
 });
 
-const itemsPerPage = ref(2);
+const itemsPerPage = ref(5);
 </script>
 
 <style lang="scss" scoped>

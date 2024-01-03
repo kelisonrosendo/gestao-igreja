@@ -45,3 +45,7 @@ export const estadoBrasil = [
   { title: "Sergipe", value: "SE" },
   { title: "Tocantins", value: "TO" },
 ];
+
+export const searchInConstants = (constant: any, value: string | number) => {
+  return constant.find((item: any) => item.value === value);
+};
