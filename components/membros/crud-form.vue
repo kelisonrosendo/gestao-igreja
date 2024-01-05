@@ -1,10 +1,10 @@
 <template>
-  <v-form ref="form" @submit.prevent>
+  <v-form ref="form" :disabled="loading" @submit.prevent>
     <section>
       <h1 class="text-primary mb-4">Informações gerais</h1>
 
       <v-row>
-        <v-col cols="4">
+        <v-col cols="12" sm="12" md="4">
           <v-select
             v-model="formData.situacao"
             persistent-placeholder
@@ -22,6 +22,7 @@
       <v-row>
         <v-col>
           <v-text-field
+            v-model="formData.nome"
             persistent-placeholder
             label="Nome completo"
             placeholder="Preencher"
@@ -34,14 +35,17 @@
       <v-row>
         <v-col cols="12" sm="12" md="4">
           <v-text-field
+            v-model="formData.data_nascimento"
+            v-maska:[dateMask]
             persistent-placeholder
             label="Data de nascimento"
             placeholder="dd/mm/aaaa"
-            :rules="[required]"
+            :rules="[required, date]"
           />
         </v-col>
         <v-col cols="12" sm="12" md="4">
           <v-select
+            v-model="formData.sexo"
             persistent-placeholder
             return-object
             label="Sexo"
@@ -54,6 +58,7 @@
         </v-col>
         <v-col cols="12" sm="12" md="4">
           <v-select
+            v-model="formData.estado_civil"
             persistent-placeholder
             return-object
             label="Estado civil"
@@ -68,18 +73,21 @@
       <v-row>
         <v-col cols="12" sm="12" md="8">
           <v-text-field
+            v-model="formData.email"
             persistent-placeholder
             label="E-mail"
             placeholder="Preencher"
-            :rules="[required]"
+            :rules="[email]"
           />
         </v-col>
         <v-col cols="12" sm="12" md="4">
           <v-text-field
+            v-model="formData.telefone"
+            v-maska:[phoneMask]
             persistent-placeholder
             label="Telefone"
             placeholder="(##) ####-####"
-            :rules="[required]"
+            :rules="[phone]"
           />
         </v-col>
       </v-row>
@@ -91,6 +99,7 @@
       <v-row>
         <v-col cols="12" sm="12" md="8">
           <v-text-field
+            v-model="formData.endereco"
             persistent-placeholder
             label="Endereço"
             placeholder="Preencher"
@@ -99,6 +108,7 @@
         </v-col>
         <v-col cols="12" sm="12" md="4">
           <v-text-field
+            v-model="formData.numero"
             persistent-placeholder
             label="Número"
             placeholder="Preencher"
@@ -109,6 +119,7 @@
       <v-row>
         <v-col cols="12" sm="12" md="4">
           <v-text-field
+            v-model="formData.bairro"
             persistent-placeholder
             label="Bairro"
             placeholder="Preencher"
@@ -117,6 +128,7 @@
         </v-col>
         <v-col cols="12" sm="12" md="4">
           <v-text-field
+            v-model="formData.cidade"
             persistent-placeholder
             label="Cidade"
             placeholder="Preencher"
@@ -125,6 +137,7 @@
         </v-col>
         <v-col cols="12" sm="12" md="4">
           <v-select
+            v-model="formData.estado"
             persistent-placeholder
             return-object
             label="Estado"
@@ -139,39 +152,66 @@
       <v-row>
         <v-col cols="12" sm="12" md="4">
           <v-text-field
+            v-model="formData.cep"
+            v-maska:[cepMask]
             persistent-placeholder
             label="CEP"
             placeholder="#####-###"
-            :rules="[required]"
+            :rules="[required, cep]"
           />
         </v-col>
         <v-col cols="12" sm="12" md="8">
           <v-text-field
+            v-model="formData.complemento"
             persistent-placeholder
             label="Complemento"
             placeholder="Preencher"
-            :rules="[required]"
           />
         </v-col>
       </v-row>
     </section>
 
     <client-only>
-      <Teleport to="body">
+      <teleport to="body">
         <v-footer app id="footer" elevation="5" height="60" class="px-10">
           <v-spacer />
-          <v-btn color="primary" variant="outlined"> Salvar Informações </v-btn>
+          <v-btn
+            type="submit"
+            color="primary"
+            variant="outlined"
+            :loading="loading"
+            @click="onSubmit"
+          >
+            Salvar Informações
+          </v-btn>
         </v-footer>
-      </Teleport>
+      </teleport>
     </client-only>
   </v-form>
 </template>
 
 <script setup lang="ts">
-const props = defineProps({
-  membroId: Number,
+const route = useRoute();
+const membroStore = useMembroStore();
+
+const form = ref();
+const { formData, loading } = storeToRefs(membroStore);
+
+onMounted(() => {
+  if (route.params.id) {
+    membroStore.loadMembro(+route.params.id);
+  } else {
+    membroStore.resetStateFormData();
+  }
 });
 
-const membroStore = useMembroStore();
-const { formData } = storeToRefs(membroStore);
+const onSubmit = async () => {
+  const { valid } = await form.value.validate();
+
+  if (valid) {
+    formData.value.id
+      ? membroStore.updateMembro(formData.value.id)
+      : membroStore.createMembro();
+  }
+};
 </script>

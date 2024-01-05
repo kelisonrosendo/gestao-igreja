@@ -11,9 +11,9 @@ export const estadoCivil = [
 ];
 
 export const situacaoMembro = [
-  { title: "Ativo", value: "ATIVO" },
-  { title: "Inativo", value: "INATIVO" },
-  { title: "Afastado", value: "AFASTADO" },
+  { title: "Ativo", value: "ATIVO", color: "primary" },
+  { title: "Inativo", value: "INATIVO", color: "red" },
+  { title: "Afastado", value: "AFASTADO", color: "grey-darken-2" },
 ];
 
 export const estadoBrasil = [
@@ -45,6 +45,15 @@ export const estadoBrasil = [
   { title: "Sergipe", value: "SE" },
   { title: "Tocantins", value: "TO" },
 ];
+
+export const dateMask = { mask: "##/##/####" };
+export const phoneMask = { mask: "(##) #####-####" };
+export const cepMask = { mask: "#####-###" };
+
+export const pagination = {
+  defaultPage: 1,
+  defaultSize: 5,
+};
 
 export const searchInConstants = (constant: any, value: string | number) => {
   return constant.find((item: any) => item.value === value);

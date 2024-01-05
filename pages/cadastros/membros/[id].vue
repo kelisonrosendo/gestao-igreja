@@ -1,5 +1,5 @@
 <template>
-  <membros-crud-form :membro-id="membroId" />
+  <membros-crud-form />
 </template>
 
 <script setup lang="ts">
@@ -8,7 +8,4 @@ definePageMeta({
   subtitle: "Editar cadastro de membro",
   pageBack: "/cadastros/membros",
 });
-
-const route = useRoute();
-const membroId = +route.params.id;
 </script>

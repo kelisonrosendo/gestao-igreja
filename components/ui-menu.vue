@@ -52,7 +52,7 @@ const menuItems = ref([
   {
     key: "CADASTRO",
     label: "Cadastros",
-    icon: "mdi-pencil-plus-outline",
+    icon: "mdi-note-edit-outline",
     items: [
       {
         key: "MEMBRO",

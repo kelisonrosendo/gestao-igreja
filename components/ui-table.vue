@@ -1,11 +1,12 @@
 <template>
   <v-data-table-server
-    v-model:items-per-page="itemsPerPage"
     :headers="headers"
     :items-length="totalItems"
     :items="serverItems"
-    :loading="loading"
     :search="search"
+    :page="page"
+    :items-per-page="itemsPerPage"
+    :loading="loading"
     no-data-text="Nenhum registro encontrado"
     loading-text="Carregando..."
     items-per-page-text="Itens por página:"
@@ -32,6 +33,14 @@ const props = defineProps({
     type: Array,
     default: () => [],
   },
+  page: {
+    type: Number,
+    default: 1,
+  },
+  itemsPerPage: {
+    type: Number,
+    default: 5,
+  },
   totalItems: {
     type: Number,
     default: 0,
@@ -42,8 +51,6 @@ const props = defineProps({
   },
   loading: Boolean,
 });
-
-const itemsPerPage = ref(5);
 </script>
 
 <style lang="scss" scoped>
